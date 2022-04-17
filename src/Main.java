@@ -1,35 +1,57 @@
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
-public class Main {
+class Main{
+    public static void NGE(int[] a){
+        Stack<Integer>stack = new Stack<>();
+        int[] arr=new int[a.length];
+        int num = -1;
+        int numl = 0;
+        for(int s: a){
+            stack.push(s);
+        }
+        num = stack.peek();
+        numl = stack.peek();
+        stack.pop();
+        arr[a.length-1]=-1;
+        while (stack.size()!=0){
+            if(stack.peek()>=numl&&stack.peek()>=num){
+                num = stack.peek();
+                numl = stack.peek();
+                arr[stack.size()-1]=-1;
+                stack.pop();
+            }else if(num>=stack.peek()&&numl>=stack.peek()){
+                arr[stack.size()-1]=numl;
+                numl = stack.peek();
+                stack.pop();
+            }else if(num==numl&&num>=stack.peek()){
+                arr[stack.size()-1]=num;
+                numl = stack.peek();
+                stack.pop();
+            }else if(num>=stack.peek()&&numl<stack.peek()){
+                arr[stack.size()-1]=num;
+                numl = stack.peek();
+                stack.pop();
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (i == arr.length - 1) {
+                System.out.print(arr[i]);
+            } else {
+                System.out.print(arr[i] + " ");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int a = sc.nextInt();
-
-        ArrayList<Integer> list = new ArrayList<>();
+        int[] ar= new int[a];
         for (int i = 0; i <a ; i++) {
-            int b = sc.nextInt();
-            list.add(b);
+            int b =sc.nextInt();
+            ar[i]=b;
         }
-        int c = list.get(0);
-        for (int i : list){
-            c=Math.min(c,i);
-        }
-        ArrayList<Integer> et = new ArrayList<>();
-        for (int i = 2; i <c+1 ; i++) {
-            for (int j : list) {
-                if (et.contains(j % i) == false) {
-                    et.add(j % i);
-                }
-            }
-
-            if (et.size()==1) {
-                System.out.println(i);
-            }
-            et.clear();
-        }
+        NGE(ar);
     }
 }
-dd

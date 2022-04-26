@@ -1,30 +1,38 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
-class Main{
+class Main {
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
-        String[] B =br.readLine().split(" ");
-        int a = Integer.parseInt(B[0]);
-        int b = Integer.parseInt(B[1]);
-        int count = 0;
-
-        for (int i = a; i <= b ; i++) {
-            boolean is = true;
-            String[] s =String.valueOf(i).split("");
-            for(String n: s){
-                if(Integer.parseInt(n)!=4 && Integer.parseInt(n)!=7){
-                    is = false;
-                    break;
-                }
-            }
-            if(is){
-                count++;
-            }
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int h = Integer.parseInt(br.readLine());
+        StringBuffer[] sb = new StringBuffer[h];
+        for (int i = 0; i <h ; i++) {
+            sb[i]=new StringBuffer();
         }
-        System.out.println(count);
+        int[] arr = new int[(int)Math.pow(2,h)-1];
+        String[] S =br.readLine().split(" ");
+        for (int i = 0; i < arr.length; i++) {
+            arr[i]=Integer.parseInt(S[i]);
+        }
+        solve(0,arr.length-1,0,arr,h,sb);
+    }
+    public static void solve(int start,int end,int floor,int[] arr,int h,StringBuffer[] sb){
+        if(floor==h){
+            return;
+        }
+        int m =(start+end)/2;
+        sb[floor].append(arr[m]+" ");
+
+        solve(start,m-1,floor+1,arr,h,sb);
+        solve(m+1,end,floor+1,arr,h,sb);
+
     }
 }
